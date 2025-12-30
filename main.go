@@ -18,7 +18,7 @@ import (
 )
 
 const (
-	TorProxyAddress = "127.0.0.1:9150" // Tor Browser portu
+	TorProxyAddress = "127.0.0.1:9150" // Tor browser port
 	ReportFileName  = "scan_report.log"
 	OutputDir       = "output_data"
 )
@@ -28,28 +28,23 @@ func main() {
 	fmt.Println("   Siber Tehdit İstihbaratı (CTI) Aracı    ")
 	fmt.Println("===========================================")
 
-	// 1. MODÜL: Hedefleri Yükle (Input Handler)
 	targets, err := loadTargets("targets.yaml")
 	if err != nil {
 		log.Fatalf("[!] Giriş dosyası hatası: %v", err)
 	}
 
-	// Rapor dosyasını hazırla
 	report, _ := os.OpenFile(ReportFileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	defer report.Close()
 	report.WriteString(fmt.Sprintf("\n--- Tarama Başlangıcı: %s ---\n", time.Now().Format("2006-01-02 15:04:05")))
 
-	// 2. MODÜL: Tor Proxy Yapılandırması
 	torClient, err := setupTorClient()
 	if err != nil {
 		fmt.Printf("[X] Tor bağlantı hatası: %v\n", err)
 		return
 	}
 
-	// IP Doğrulama (Ödev Kanıtı)
 	verifyTorIP(torClient)
 
-	// Chromedp (Ekran Görüntüsü) Ayarları
 	opts := append(chromedp.DefaultExecAllocatorOptions[:],
 		chromedp.ProxyServer("socks5://"+TorProxyAddress),
 		chromedp.Flag("ignore-certificate-errors", true),
@@ -58,7 +53,6 @@ func main() {
 	allocCtx, cancel := chromedp.NewExecAllocator(context.Background(), opts...)
 	defer cancel()
 
-	// 3. & 4. MODÜL: Tarama ve Kayıt
 	for _, target := range targets {
 		processTarget(allocCtx, torClient, target, report)
 	}
@@ -66,6 +60,7 @@ func main() {
 	fmt.Println("\n[+] Operasyon tamamlandı. Çıktılar '" + OutputDir + "' klasöründe.")
 }
 
+// (Hedef Okuyucu)
 func loadTargets(path string) ([]string, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -90,6 +85,7 @@ func loadTargets(path string) ([]string, error) {
 	return urls, nil
 }
 
+// (Tor Tünel Yapıcı)
 func setupTorClient() (*http.Client, error) {
 	dialer, err := proxy.SOCKS5("tcp", TorProxyAddress, nil, proxy.Direct)
 	if err != nil {
@@ -104,6 +100,7 @@ func setupTorClient() (*http.Client, error) {
 	}, nil
 }
 
+// (Güvenlik Kontrolü)
 func verifyTorIP(client *http.Client) {
 	fmt.Print("[INFO] Tor bağlantısı kontrol ediliyor... ")
 	resp, err := client.Get("https://check.torproject.org/api/ip")
@@ -116,6 +113,7 @@ func verifyTorIP(client *http.Client) {
 	}
 }
 
+// (Hedef İşleyici)
 func processTarget(allocCtx context.Context, client *http.Client, target string, report *os.File) {
 	fmt.Printf("[>] Hedef: %s ... ", target)
 
@@ -133,7 +131,6 @@ func processTarget(allocCtx context.Context, client *http.Client, target string,
 	fmt.Println("AKTİF")
 	report.WriteString(fmt.Sprintf("[SUCCESS] %s - HTTP %d\n", target, resp.StatusCode))
 
-	// Dosya adını temizle (URL'deki yasaklı karakterleri sil)
 	safeDir := strings.ReplaceAll(target, "http://", "")
 	safeDir = strings.ReplaceAll(safeDir, "/", "_")
 	safeDir = strings.ReplaceAll(safeDir, ":", "_")
@@ -146,16 +143,17 @@ func processTarget(allocCtx context.Context, client *http.Client, target string,
 	takeScreenshot(allocCtx, target, folderPath)
 }
 
+// (Ekran Görüntüsü Alıcı)
 func takeScreenshot(allocCtx context.Context, url string, folder string) {
 	ctx, cancel := chromedp.NewContext(allocCtx)
 	defer cancel()
-	ctx, cancel = context.WithTimeout(ctx, 180*time.Second) // Tor yavaş olduğu için süreyi uzattık
+	ctx, cancel = context.WithTimeout(ctx, 180*time.Second)
 	defer cancel()
 
 	var buf []byte
 	err := chromedp.Run(ctx,
 		chromedp.Navigate(url),
-		chromedp.Sleep(30*time.Second), // Sayfanın render edilmesi için bekle
+		chromedp.Sleep(30*time.Second),
 		chromedp.FullScreenshot(&buf, 90),
 	)
 
