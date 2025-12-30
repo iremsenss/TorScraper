@@ -1,0 +1,15 @@
+proxy:
+  host: "127.0.0.1"
+  port: "9150"
+
+timeout: 60
+
+targets:
+  - url: http://torbuy4iw7eghmdkpllz2tjvphtsey6a47mn2mjsmcii4vlv3wr2csqd.onion/
+  - url: http://uvlt4htyvgh4tpbae7px2xfxlu5v2j5bxrisefddcbqytioncdqvz6qd.onion/
+  - url: http://w4ljqtyjnxinknz4hszn4bsof7zhfy5z2h4srfss4vvkoikiwz36o3id.onion/
+  - url: http://frenchwltobamdhyq5y2egezkbnz53ws5kaa6wnscildhnegdw5nhsyd.onion/
+  - url: http://notevil2ebbr5xjww6nryjta7bycbriyi2vh7an3wcuovlznvobykmad.onion/
+  - url: http://darknet2qsql2onz67zk5lo4wlid3sagjjwh4cstoluietkxoxezwxqd.onion/
+  - url: http://bfdforumon7c2iprvgeqmdlbczvwahbqgz2y7ft5uodmijfl4tbqvnad.onion/
+  - url: https://pitchprash4aqilfr7sbmuwve3pnkpylqwxjbj2q5o4szcfeea6d27yd.onion/
