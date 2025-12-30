@@ -37,6 +37,7 @@ Proje 4 ana modül üzerine inşa edilmiştir:
 
 ### 1. Bağımlılıkları Yükleyin
 ```bash
-git clone [https://github.com/kullaniciadi/torScraper.git]
+git clone [https://github.com/iremsenss/TorScraper.git]
 cd TorScraper
 go mod download
+
