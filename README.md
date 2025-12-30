@@ -40,5 +40,7 @@ Proje 4 ana modül üzerine inşa edilmiştir:
 git clone https://github.com/iremsenss/TorScraper.git
 cd TorScraper
 go mod download
+go run main.go
+
 
 
