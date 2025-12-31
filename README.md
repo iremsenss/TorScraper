@@ -33,14 +33,26 @@ Proje 4 ana modül üzerine inşa edilmiştir:
 
 ---
 
-## 🔧 Kurulum ve Kullanım
+# 🔧 Kurulum ve Kullanım
 
-### 1. Bağımlılıkları Yükleyin
+## 1. Projeyi Klonlayın
 ```bash
-git clone https://github.com/iremsenss/TorScraper.git
+git clone [https://github.com/iremsenss/TorScraper.git](https://github.com/iremsenss/TorScraper.git)
 cd TorScraper
+```
+## 2. Bağımlılıkları Yükleyin
+```bash
 go mod download
+go get golang.org/x/net/proxy
+```
+## 3. Yapılandırma
+### targets.yaml dosyasını düzenleyin ve taramak istediğiniz .onion adreslerini ekleyin.
+
+## 4. Çalıştırma
+### Tor Browser'ın veya Tor servisinin arka planda çalıştığından emin olun ve uygulamayı başlatın:
+```bash    
 go run main.go
+
 
 
 
