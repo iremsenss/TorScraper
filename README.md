@@ -46,13 +46,9 @@ go mod download
 go get golang.org/x/net/proxy
 ```
 ## 3. Yapılandırma
-### targets.yaml dosyasını düzenleyin ve taramak istediğiniz .onion adreslerini ekleyin.
+#### targets.yaml dosyasını düzenleyin ve taramak istediğiniz .onion adreslerini ekleyin.
 
 ## 4. Çalıştırma
-### Tor Browser'ın veya Tor servisinin arka planda çalıştığından emin olun ve uygulamayı başlatın:
+#### Tor Browser'ın veya Tor servisinin arka planda çalıştığından emin olun ve uygulamayı başlatın:
 ```bash    
 go run main.go
-
-
-
-
