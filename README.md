@@ -33,7 +33,7 @@ Proje 4 ana modül üzerine inşa edilmiştir:
 
 ---
 
-# 🔧 Kurulum ve Kullanım
+## 🔧 Kurulum ve Kullanım
 
 ## 1. Projeyi Klonlayın
 ```bash
@@ -52,3 +52,4 @@ go get golang.org/x/net/proxy
 #### Tor Browser'ın veya Tor servisinin arka planda çalıştığından emin olun ve uygulamayı başlatın:
 ```bash    
 go run main.go
+
